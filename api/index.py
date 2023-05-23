@@ -54,6 +54,13 @@ def handle_message(event):
             TextSendMessage(text="感謝您的使用，若需要我的服務，請跟我說 「啟動」 謝謝~"))
         return
     
+    if event.message.text == "meme":
+        working_status = True
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態，開心果將推薦您好笑的梗圖!"))
+        return
+    
     if working_status:
         chatgpt.add_msg(f"Human:{event.message.text}?\n")
         reply_msg = chatgpt.get_response().replace("AI:", "", 1)
