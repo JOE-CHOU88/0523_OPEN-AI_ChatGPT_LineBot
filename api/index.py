@@ -65,7 +65,7 @@ def handle_message(event):
         working_status = True
         line_bot_api.reply_message(
             event.reply_token,
-            ImageSendMessage(original_content_url="https://i.imgflip.com/7mtwx5.jpg"))
+            ImageSendMessage(original_content_url="https://i.imgflip.com/7mtwx5.jpg", preview_image_url="https://i.imgflip.com/7mtwx5.jpg"))
         return
     
     if working_status:
