@@ -82,7 +82,7 @@ def handle_message(event):
         # source_path = "meme_template/A train hitting a school bus.png"
         # download_image(source_path, template_path)
 
-        img_url = "https://i.imgflip.com/7mtwx5.jpg"
+        img_url = "https://firebasestorage.googleapis.com/v0/b/mis-final-7bc17.appspot.com/o/index-images%2FWhat-is-a-floor-plan-with-dimensions.png?alt=media&token=31559cce-459a-4079-b156-185886b85911"
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
