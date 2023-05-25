@@ -15,6 +15,17 @@ working_status = os.getenv("DEFALUT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
+
+def download_image(source_path: str, destination_path: str) -> None:
+    bucket = storage.bucket()
+
+    # 指定欲下載的檔案路徑
+    blob = bucket.blob(source_path)
+
+    # 下載檔案
+    blob.download_to_filename(destination_path)
+
+
 # domain root
 @app.route('/')
 def home():
@@ -85,15 +96,6 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=reply_msg))
 
-
-def download_image(source_path: str, destination_path: str) -> None:
-    bucket = storage.bucket()
-
-    # 指定欲下載的檔案路徑
-    blob = bucket.blob(source_path)
-
-    # 下載檔案
-    blob.download_to_filename(destination_path)
 
 if __name__ == "__main__":
     app.run()
