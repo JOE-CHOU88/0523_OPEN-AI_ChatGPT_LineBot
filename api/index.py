@@ -74,19 +74,19 @@ def handle_message(event):
             TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態，開心果將推薦您好笑的梗圖!"))
         return
     
-    if event.message.text == "img":
-        working_status = True
+    # if event.message.text == "img":
+    #     working_status = True
 
-        # 下載完之後的位置
-        # template_path = "./meme_template.png"
-        # source_path = "meme_template/A train hitting a school bus.png"
-        # download_image(source_path, template_path)
+    #     # 下載完之後的位置
+    #     # template_path = "./meme_template.png"
+    #     # source_path = "meme_template/A train hitting a school bus.png"
+    #     # download_image(source_path, template_path)
 
-        img_url = "https://i.imgflip.com/7mtwx5.jpg"
-        line_bot_api.reply_message(
-            event.reply_token,
-            ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
-        return
+    #     img_url = "https://i.imgflip.com/7mtwx5.jpg"
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
+    #     return
     
     if working_status:
         chatgpt.add_msg(f"Human:{event.message.text}?\n")
