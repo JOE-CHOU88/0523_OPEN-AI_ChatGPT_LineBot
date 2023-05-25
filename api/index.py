@@ -16,14 +16,14 @@ app = Flask(__name__)
 chatgpt = ChatGPT()
 
 
-def download_image(source_path: str, destination_path: str) -> None:
-    bucket = storage.bucket()
+# def download_image(source_path: str, destination_path: str) -> None:
+#     bucket = storage.bucket()
 
-    # 指定欲下載的檔案路徑
-    blob = bucket.blob(source_path)
+#     # 指定欲下載的檔案路徑
+#     blob = bucket.blob(source_path)
 
-    # 下載檔案
-    blob.download_to_filename(destination_path)
+#     # 下載檔案
+#     blob.download_to_filename(destination_path)
 
 
 # domain root
@@ -78,9 +78,9 @@ def handle_message(event):
         working_status = True
 
         # 下載完之後的位置
-        template_path = "./meme_template.png"
-        source_path = "meme_template/A train hitting a school bus.png"
-        download_image(source_path, template_path)
+        # template_path = "./meme_template.png"
+        # source_path = "meme_template/A train hitting a school bus.png"
+        # download_image(source_path, template_path)
 
         img_url = "https://firebasestorage.googleapis.com/v0/b/mis-final-7bc17.appspot.com/o/index-images%2FWhat-is-a-floor-plan-with-dimensions.png?alt=media&token=31559cce-459a-4079-b156-185886b85911"
         line_bot_api.reply_message(
