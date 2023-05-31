@@ -95,6 +95,9 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [image_message,text_message])
+        
+        send_auto_button_message(event)
+        
         return
     
     if working_status:
