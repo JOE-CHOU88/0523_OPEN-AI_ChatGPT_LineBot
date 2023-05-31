@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, MessageTemplateAction, ButtonsTemplate,TemplateSendMessage
 from api.chatgpt import ChatGPT
 
 # from firebase_admin import storage
@@ -49,6 +49,29 @@ def callback():
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
+    
+    # Create button action
+    action = MessageTemplateAction(label='Button', text='Button clicked')
+
+    # Create a ButtonsTemplate
+    buttons_template = ButtonsTemplate(
+            title='Button Template',
+            text='This is a button',
+            actions=[action]
+    )
+
+    # Create a TemplateSendMessage
+    template_message = TemplateSendMessage(
+            alt_text='Button Template',
+            template=buttons_template
+    )
+
+    # Send the template message
+    line_bot_api.reply_message(
+            event.reply_token,
+            template_message
+    )
+
     
     if event.message.type != "text":
         return
