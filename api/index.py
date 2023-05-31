@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, MessageTemplateAction, ButtonsTemplate,TemplateSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, QuickReply, QuickReplyButton, MessageAction
 from api.chatgpt import ChatGPT
 
 # from firebase_admin import storage
@@ -49,31 +49,39 @@ def callback():
 @line_handler.add(MessageEvent, message=TextMessage)
 
 # Function to send the message with the auto-appearing button
-def send_auto_button_message():
-    # Create button action
-    action = MessageTemplateAction(label='Button', text='Button clicked')
+def send_auto_button_message(event):
+    # Create alternative message actions
+    action1 = MessageAction(label='Option 1', text='Option 1 selected')
+    action2 = MessageAction(label='Option 2', text='Option 2 selected')
+    action3 = MessageAction(label='Option 3', text='Option 3 selected')
 
-    # Create a ButtonsTemplate
-    buttons_template = ButtonsTemplate(
-        title='Button Template',
-        text='This is a button',
-        actions=[action]
+    # Create quick reply buttons
+    quick_reply_buttons = [
+        QuickReplyButton(action=action1),
+        QuickReplyButton(action=action2),
+        QuickReplyButton(action=action3),
+    ]
+
+    # Create quick reply instance
+    quick_reply = QuickReply(items=quick_reply_buttons)
+
+    # Create the text message with alternatives
+    message = TextSendMessage(
+        text='Please select an option:',
+        quick_reply=quick_reply
     )
 
-    # Create a TemplateSendMessage
-    template_message = TemplateSendMessage(
-        alt_text='Button Template',
-        template=buttons_template
+    # Send the message with alternatives
+    line_bot_api.reply_message(
+        event.reply_token,
+        message
     )
-
-    # Send the template message to a specific user
-    line_bot_api.push_message(template_message)
 
 def handle_message(event):
     global working_status
 
-    send_auto_button_message()
-    
+    send_auto_button_message(event)
+
     if event.message.type != "text":
         return
     
