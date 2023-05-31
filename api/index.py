@@ -47,31 +47,32 @@ def callback():
 
 
 @line_handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    global working_status
-    
+
+# Function to send the message with the auto-appearing button
+def send_auto_button_message():
     # Create button action
     action = MessageTemplateAction(label='Button', text='Button clicked')
 
     # Create a ButtonsTemplate
     buttons_template = ButtonsTemplate(
-            title='Button Template',
-            text='This is a button',
-            actions=[action]
+        title='Button Template',
+        text='This is a button',
+        actions=[action]
     )
 
     # Create a TemplateSendMessage
     template_message = TemplateSendMessage(
-            alt_text='Button Template',
-            template=buttons_template
+        alt_text='Button Template',
+        template=buttons_template
     )
 
-    # Send the template message
-    line_bot_api.reply_message(
-            event.reply_token,
-            template_message
-    )
+    # Send the template message to a specific user
+    line_bot_api.push_message(template_message)
 
+def handle_message(event):
+    global working_status
+
+    send_auto_button_message()
     
     if event.message.type != "text":
         return
