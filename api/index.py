@@ -49,35 +49,6 @@ def callback():
 @line_handler.add(MessageEvent, message=TextMessage)
 
 # Function to send the message with the auto-appearing button
-def send_auto_button_message(event):
-    global working_status
-
-    # Create alternative message actions
-    action1 = MessageAction(label='迷因產生器', text='meme')
-    action2 = MessageAction(label='正常對話', text='conversation')
-
-    # Create quick reply buttons
-    quick_reply_buttons = [
-        QuickReplyButton(action=action1),
-        QuickReplyButton(action=action2),
-    ]
-
-    # Create quick reply instance
-    quick_reply = QuickReply(items=quick_reply_buttons)
-
-    # Create the text message with alternatives
-    message = TextSendMessage(
-        text='Please select an option:',
-        quick_reply=quick_reply
-    )
-
-    # Send the message with alternatives
-    if working_status and event.message.text != "meme":
-        line_bot_api.reply_message(
-            event.reply_token,
-            message
-        )
-
 def handle_message(event):
     global working_status
 
@@ -136,6 +107,38 @@ def handle_message(event):
 
     send_auto_button_message(event)
 
+def send_auto_button_message(event):
+    global working_status
+
+    # Create alternative message actions
+    action1 = MessageAction(label='迷因產生器', text='meme')
+    action2 = MessageAction(label='正常對話', text='conversation')
+
+    # Create quick reply buttons
+    quick_reply_buttons = [
+        QuickReplyButton(action=action1),
+        QuickReplyButton(action=action2),
+    ]
+
+    # Create quick reply instance
+    quick_reply = QuickReply(items=quick_reply_buttons)
+
+    # Create the text message with alternatives
+    message = TextSendMessage(
+        text='Please select an option:',
+        quick_reply=quick_reply
+    )
+
+    # Send the message with alternatives
+    if working_status:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態"))
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            message
+        )
 
 if __name__ == "__main__":
     app.run()
