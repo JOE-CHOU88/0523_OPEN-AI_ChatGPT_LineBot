@@ -58,7 +58,7 @@ def handle_message(event):
 
     if event.message.text == "啟動":
         working_status = True
-        text_message = TextSendMessage(text="我是時下流行的AI智能，目前可以為您服務囉，歡迎來跟我互動~"))
+        text_message = TextSendMessage(text="我是時下流行的AI智能，目前可以為您服務囉，歡迎來跟我互動~")
         line_bot_api.reply_message(
             event.reply_token,
             [text_message,send_auto_button_message()])
