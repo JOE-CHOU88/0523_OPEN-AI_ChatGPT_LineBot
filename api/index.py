@@ -55,13 +55,13 @@ def handle_message(event):
     if event.message.type != "text":
         return
     
-    send_auto_button_message(event)
 
     if event.message.text == "啟動":
         working_status = True
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="我是時下流行的AI智能，目前可以為您服務囉，歡迎來跟我互動~"))
+        send_auto_button_message(event)
         return
 
     if event.message.text == "安靜":
@@ -99,15 +99,8 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
+        send_auto_button_message(event)
 
-    if event.message.text == "conversation":
-        working_status = True
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="開心果歡迎您~對話即將展開"))
-        return
-
-    send_auto_button_message(event)
 
 def send_auto_button_message(event):
     # Create alternative message actions
