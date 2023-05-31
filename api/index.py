@@ -72,7 +72,7 @@ def send_auto_button_message(event):
     )
 
     # Send the message with alternatives
-    if working_status:
+    if working_status and event.message.text != "meme":
         line_bot_api.reply_message(
             event.reply_token,
             message
@@ -126,7 +126,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
-    
+
     if event.message.text == "conversation":
         working_status = True
         line_bot_api.reply_message(
