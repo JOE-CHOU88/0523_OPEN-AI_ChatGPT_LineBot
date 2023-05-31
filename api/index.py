@@ -94,9 +94,7 @@ def handle_message(event):
 
         line_bot_api.reply_message(
             event.reply_token,
-            [image_message,text_message])
-        
-        send_auto_button_message(event)
+            [image_message,text_message,send_auto_button_message()])
         
         return
     
@@ -109,7 +107,7 @@ def handle_message(event):
             TextSendMessage(text=reply_msg))
 
 
-def send_auto_button_message(event):
+def send_auto_button_message():
     # Create alternative message actions
     action1 = MessageAction(label='迷因產生器', text='meme')
     action2 = MessageAction(label='正常對話', text='conversation')
@@ -129,11 +127,13 @@ def send_auto_button_message(event):
         quick_reply=quick_reply
     )
 
-    # Send the message with alternatives
-    line_bot_api.reply_message(
-        event.reply_token,
-        message
-    )
+    return message
+
+    # # Send the message with alternatives
+    # line_bot_api.reply_message(
+    #     event.reply_token,
+    #     message
+    # )
 
 if __name__ == "__main__":
     app.run()
