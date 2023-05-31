@@ -55,6 +55,8 @@ def handle_message(event):
     if event.message.type != "text":
         return
     
+    send_auto_button_message(event)
+    
     if event.message.text == "啟動":
         working_status = True
         line_bot_api.reply_message(
