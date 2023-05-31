@@ -124,21 +124,19 @@ def send_auto_button_message(event):
     quick_reply = QuickReply(items=quick_reply_buttons)
 
     # Create the text message with alternatives
-    message = TextSendMessage(
-        text='Please select an option:',
-        quick_reply=quick_reply
-    )
+    if working_status:
+        message = TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態")
+    else:
+        message = TextSendMessage(
+            text='Please select an option:',
+            quick_reply=quick_reply
+        )
 
     # Send the message with alternatives
-    if working_status:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態"))
-    else:
-        line_bot_api.reply_message(
-            event.reply_token,
-            message
-        )
+    line_bot_api.reply_message(
+        event.reply_token,
+        message
+    )
 
 if __name__ == "__main__":
     app.run()
