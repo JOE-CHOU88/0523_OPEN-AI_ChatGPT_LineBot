@@ -51,15 +51,13 @@ def callback():
 # Function to send the message with the auto-appearing button
 def send_auto_button_message(event):
     # Create alternative message actions
-    action1 = MessageAction(label='Option 1', text='Option 1 selected')
-    action2 = MessageAction(label='Option 2', text='Option 2 selected')
-    action3 = MessageAction(label='Option 3', text='Option 3 selected')
+    action1 = MessageAction(label='迷因產生器', text='meme')
+    action2 = MessageAction(label='正常對話', text='conversation')
 
     # Create quick reply buttons
     quick_reply_buttons = [
         QuickReplyButton(action=action1),
         QuickReplyButton(action=action2),
-        QuickReplyButton(action=action3),
     ]
 
     # Create quick reply instance
@@ -80,6 +78,7 @@ def send_auto_button_message(event):
 def handle_message(event):
     global working_status
 
+    call_auto_btn = True
     
     if event.message.type != "text":
         return
@@ -127,7 +126,16 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=reply_msg))
     
-    send_auto_button_message(event)
+    if event.message.text == "conversation":
+        working_status = True
+        call_auto_btn = False
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="開心果歡迎您~對話即將展開"))
+        return
+    
+    if call_auto_btn:
+        send_auto_button_message(event)
 
 
 if __name__ == "__main__":
