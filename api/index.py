@@ -61,7 +61,6 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="我是時下流行的AI智能，目前可以為您服務囉，歡迎來跟我互動~"))
-        send_auto_button_message(event)
         return
 
     if event.message.text == "安靜":
@@ -81,15 +80,21 @@ def handle_message(event):
     if event.message.text == "img":
         working_status = True
 
+
         # 下載完之後的位置
         # template_path = "./meme_template.png"
         # source_path = "meme_template/A train hitting a school bus.png"
         # download_image(source_path, template_path)
 
+
         img_url = "https://firebasestorage.googleapis.com/v0/b/fir-test-9907d.appspot.com/o/meme_template%2FAJ%20Styles%20%26%20Undertaker.png?alt=media&token=7910153b-fff3-4d2b-a1f2-ae40d508a23b&_gl=1*1qnypgh*_ga*MTQwMDk5MDE4LjE2ODQ2NDAxNjk.*_ga_CW55HF8NVT*MTY4NTU0OTE0MC40LjEuMTY4NTU0OTYzMS4wLjAuMA.."
+
+        image_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
+        text_message = TextSendMessage(text='This is a message with an image.')
+
         line_bot_api.reply_message(
             event.reply_token,
-            ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
+            [image_message,text_message])
         return
     
     if working_status:
