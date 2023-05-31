@@ -50,6 +50,8 @@ def callback():
 
 # Function to send the message with the auto-appearing button
 def send_auto_button_message(event):
+    global working_status
+
     # Create alternative message actions
     action1 = MessageAction(label='迷因產生器', text='meme')
     action2 = MessageAction(label='正常對話', text='conversation')
@@ -70,16 +72,15 @@ def send_auto_button_message(event):
     )
 
     # Send the message with alternatives
-    line_bot_api.reply_message(
-        event.reply_token,
-        message
-    )
+    if working_status:
+        line_bot_api.reply_message(
+            event.reply_token,
+            message
+        )
 
 def handle_message(event):
     global working_status
 
-    call_auto_btn = True
-    
     if event.message.type != "text":
         return
     
@@ -128,14 +129,12 @@ def handle_message(event):
     
     if event.message.text == "conversation":
         working_status = True
-        call_auto_btn = False
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="開心果歡迎您~對話即將展開"))
         return
-    
-    if call_auto_btn:
-        send_auto_button_message(event)
+
+    send_auto_button_message(event)
 
 
 if __name__ == "__main__":
