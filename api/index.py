@@ -111,7 +111,7 @@ def send_auto_button_message():
 
     # Create the text message with alternatives
     message = TextSendMessage(
-        text='Please select an option:',
+        text='還有什麼能為您服務的嗎?',
         quick_reply=quick_reply
     )
 
