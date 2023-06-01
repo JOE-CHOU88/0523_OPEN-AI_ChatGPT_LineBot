@@ -4,11 +4,22 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, QuickReply, QuickReplyButton, MessageAction
 from api.chatgpt import ChatGPT
 
-# import crawler.py
-# from api import crawler
 
 # 函式註解
 from typing import *
+
+# 網路爬蟲
+import requests
+from time import sleep
+from requests.exceptions import InvalidSchema
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
 
 import os
 
@@ -66,7 +77,6 @@ def handle_message(event):
     
     if event.message.text == "meme":
         working_status = True
-        # crawler.main()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態，開心果將推薦您好笑的梗圖!"))
