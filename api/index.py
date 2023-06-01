@@ -58,46 +58,46 @@ def callback():
 
 @line_handler.add(MessageEvent, message=TextMessage)
 
-class MemeGeneratorPredisAI:
-    def __init__(self, url: str) -> None:
-        self.url = url
+# class MemeGeneratorPredisAI:
+#     def __init__(self, url: str) -> None:
+#         self.url = url
 
-        self.chrome_options = Options()
-        self.chrome_options.add_argument("--disable-gpu")
+#         self.chrome_options = Options()
+#         self.chrome_options.add_argument("--disable-gpu")
 
-        # 無頭模式
-        self.chrome_options.add_argument("--headless")
+#         # 無頭模式
+#         self.chrome_options.add_argument("--headless")
     
-    # 開啟瀏覽器
-    def open_webdriver(self) -> None:
-        # 初始化瀏覽器、設置智能等待
-        # 注意!!! implicitly_wait 不要設定得太短
-        self.driver = webdriver.Chrome('chromedriver', options = self.chrome_options)
-        self.driver.implicitly_wait(20)
+#     # 開啟瀏覽器
+#     def open_webdriver(self) -> None:
+#         # 初始化瀏覽器、設置智能等待
+#         # 注意!!! implicitly_wait 不要設定得太短
+#         self.driver = webdriver.Chrome('chromedriver', options = self.chrome_options)
+#         self.driver.implicitly_wait(20)
 
-        # 開啟瀏覽器，並固定視窗大小
-        self.driver.get(self.url)
-        self.driver.set_window_size(1200, 800)
-        sleep(0.5)
+#         # 開啟瀏覽器，並固定視窗大小
+#         self.driver.get(self.url)
+#         self.driver.set_window_size(1200, 800)
+#         sleep(0.5)
 
-    def genrate_meme(self, text: str) -> None:
-        # 輸入情境文本
-        textarea = self.driver.find_element(By.CLASS_NAME, "MuiFilledInput-input")
-        textarea.send_keys(text)
-        sleep(0.5)
+#     def genrate_meme(self, text: str) -> None:
+#         # 輸入情境文本
+#         textarea = self.driver.find_element(By.CLASS_NAME, "MuiFilledInput-input")
+#         textarea.send_keys(text)
+#         sleep(0.5)
         
-        # 點擊 "GENERATE" 按鈕
-        btn_genrate = self.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div[1]/div[3]/div/div/div/div/div[2]/div[2]/button[2]")
-        btn_genrate.click()
-        sleep(15)
+#         # 點擊 "GENERATE" 按鈕
+#         btn_genrate = self.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div[1]/div[3]/div/div/div/div/div[2]/div[2]/button[2]")
+#         btn_genrate.click()
+#         sleep(15)
 
-        # 獲取圖片 url
-        img_url = self.driver.find_element(By.CLASS_NAME, "MuiAvatar-img").get_attribute("src")
-        print(img_url)
+#         # 獲取圖片 url
+#         img_url = self.driver.find_element(By.CLASS_NAME, "MuiAvatar-img").get_attribute("src")
+#         print(img_url)
 
-    # 關閉瀏覽器
-    def close(self) -> None:
-        self.driver.quit()
+#     # 關閉瀏覽器
+#     def close(self) -> None:
+#         self.driver.quit()
 
 
 # Function to send the message with the auto-appearing button
