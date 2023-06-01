@@ -74,7 +74,7 @@ def handle_message(event):
 
         image_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
         text_message = TextSendMessage(text='This is a message with an image.')
-
+        
         line_bot_api.reply_message(
             event.reply_token,
             [image_message,text_message,send_auto_button_message()])
@@ -85,9 +85,14 @@ def handle_message(event):
         chatgpt.add_msg(f"Human:{event.message.text}?\n")
         reply_msg = chatgpt.get_response().replace("AI:", "", 1)
         chatgpt.add_msg(f"AI:{reply_msg}\n")
-        line_bot_api.reply_message(
-            event.reply_token,
-            [TextSendMessage(text=reply_msg),send_auto_button_message()])
+        if event.message.text == "conversation":
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=reply_msg))
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                [TextSendMessage(text=reply_msg),send_auto_button_message()])
 
 # 自動產生對話詢問是否要切換到meme模式
 def send_auto_button_message():
