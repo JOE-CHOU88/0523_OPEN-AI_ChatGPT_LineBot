@@ -88,7 +88,7 @@ def handle_message(event):
         if event.message.text == "conversation":
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=reply_msg))
+                TextSendMessage(text="好的請說，我在聽~"))
         else:
             line_bot_api.reply_message(
                 event.reply_token,
