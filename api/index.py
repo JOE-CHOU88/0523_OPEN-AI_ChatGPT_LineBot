@@ -19,13 +19,13 @@ from requests.exceptions import InvalidSchema
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.support.ui import WebDriverWait
 
-# from transformers import (
-#    BertTokenizerFast,
-#    AutoModelForMaskedLM,
-#    AutoModelForCausalLM,
-#    AutoModelForTokenClassification,
-# )
-# from ckip_transformers.nlp import CkipWordSegmenter
+from transformers import (
+   BertTokenizerFast,
+   AutoModelForMaskedLM,
+   AutoModelForCausalLM,
+   AutoModelForTokenClassification,
+)
+from ckip_transformers.nlp import CkipWordSegmenter
 
 import os
 
