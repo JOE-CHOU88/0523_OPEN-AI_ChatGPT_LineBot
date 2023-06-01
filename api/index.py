@@ -77,6 +77,9 @@ def handle_message(event):
     global working_status
 
     if event.message.type != "text":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="不好意思，我無法處理文字以外的請求，請確認您輸入的是文字，謝謝~"))
         return
     
 
