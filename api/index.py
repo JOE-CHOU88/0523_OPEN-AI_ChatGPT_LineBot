@@ -13,7 +13,7 @@ import requests
 from threading import Thread
 from time import sleep
 from requests.exceptions import InvalidSchema
-# from selenium import webdriver
+from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.remote.webelement import WebElement
 # from selenium.webdriver.common.by import By
@@ -31,9 +31,9 @@ working_status = os.getenv("DEFALUT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-# chrome_options = webdriver.ChromeOptions()
-# chrome_options.add_argument("--disable-gpu")
-# chrome_options.add_argument("--headless")
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--headless")
 
 # def generate_meme(reply_token):
 #     driver = webdriver.Chrome('chromedriver', options=chrome_options)
