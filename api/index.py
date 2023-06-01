@@ -8,9 +8,9 @@ from api.chatgpt import ChatGPT
 from typing import *
 
 # 網路爬蟲
-# import requests
-# from time import sleep
-# from requests.exceptions import InvalidSchema
+import requests
+from time import sleep
+from requests.exceptions import InvalidSchema
 # from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.remote.webelement import WebElement
