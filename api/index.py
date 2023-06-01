@@ -4,7 +4,28 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, QuickReply, QuickReplyButton, MessageAction
 from api.chatgpt import ChatGPT
 
-# from firebase_admin import storage
+# 函式註解
+from typing import *
+
+# 網路爬蟲
+import requests
+from time import sleep
+from requests.exceptions import InvalidSchema
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+from transformers import (
+   BertTokenizerFast,
+   AutoModelForMaskedLM,
+   AutoModelForCausalLM,
+   AutoModelForTokenClassification,
+)
+from ckip_transformers.nlp import CkipWordSegmenter
 
 import os
 
