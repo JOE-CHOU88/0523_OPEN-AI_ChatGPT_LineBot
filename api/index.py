@@ -13,7 +13,7 @@ import requests
 from threading import Thread
 from time import sleep
 from requests.exceptions import InvalidSchema
-from selenium import webdriver
+# from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.remote.webelement import WebElement
 # from selenium.webdriver.common.by import By
@@ -31,24 +31,24 @@ working_status = os.getenv("DEFALUT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--headless")
+# chrome_options = webdriver.ChromeOptions()
+# chrome_options.add_argument("--disable-gpu")
+# chrome_options.add_argument("--headless")
 
-def generate_meme(reply_token):
-    driver = webdriver.Chrome('chromedriver', options=chrome_options)
-    driver.get("https://predis.ai/free-ai-tools/ai-meme-generator/#")  # Replace with the URL you want to open
-    # Perform actions with the WebDriver (e.g., fill forms, click buttons)
-    # You can interact with the page using driver.find_element, driver.click, etc.
-    # After the necessary actions, capture the screenshot or extract information from the page
-    screenshot_path = "screenshot.png"  # Replace with your desired screenshot path
-    driver.save_screenshot(screenshot_path)
-    driver.quit()
+# def generate_meme(reply_token):
+#     driver = webdriver.Chrome('chromedriver', options=chrome_options)
+#     driver.get("https://predis.ai/free-ai-tools/ai-meme-generator/#")  # Replace with the URL you want to open
+#     # Perform actions with the WebDriver (e.g., fill forms, click buttons)
+#     # You can interact with the page using driver.find_element, driver.click, etc.
+#     # After the necessary actions, capture the screenshot or extract information from the page
+#     screenshot_path = "screenshot.png"  # Replace with your desired screenshot path
+#     driver.save_screenshot(screenshot_path)
+#     driver.quit()
 
-    line_bot_api.reply_message(
-        reply_token,
-        TextSendMessage(text="Meme generated!")
-    )
+#     line_bot_api.reply_message(
+#         reply_token,
+#         TextSendMessage(text="Meme generated!")
+#     )
 
 # domain root
 @app.route('/')
@@ -97,16 +97,16 @@ def handle_message(event):
     
     if event.message.text == "meme":
         working_status = True
-        # Start the meme generation in a background thread
-        meme_thread = Thread(target=generate_meme, args=(event.reply_token,))
-        meme_thread.start()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="Meme generation in progress...")
-        )
+        # # Start the meme generation in a background thread
+        # meme_thread = Thread(target=generate_meme, args=(event.reply_token,))
+        # meme_thread.start()
         # line_bot_api.reply_message(
         #     event.reply_token,
-        #     TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態，開心果將推薦您好笑的梗圖!"))
+        #     TextSendMessage(text="Meme generation in progress...")
+        # )
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態，開心果將推薦您好笑的梗圖!"))
         return
     
     if event.message.text == "img":
