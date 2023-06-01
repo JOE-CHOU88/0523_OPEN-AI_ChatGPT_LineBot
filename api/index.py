@@ -15,17 +15,6 @@ working_status = os.getenv("DEFALUT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-
-# def download_image(source_path: str, destination_path: str) -> None:
-#     bucket = storage.bucket()
-
-#     # 指定欲下載的檔案路徑
-#     blob = bucket.blob(source_path)
-
-#     # 下載檔案
-#     blob.download_to_filename(destination_path)
-
-
 # domain root
 @app.route('/')
 def home():
@@ -98,9 +87,9 @@ def handle_message(event):
         chatgpt.add_msg(f"AI:{reply_msg}\n")
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=reply_msg))
+            [TextSendMessage(text=reply_msg),send_auto_button_message()])
 
-
+# 自動產生對話詢問是否要切換到meme模式
 def send_auto_button_message():
     # Create alternative message actions
     action1 = MessageAction(label='迷因產生器', text='meme')
