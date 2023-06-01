@@ -12,7 +12,7 @@ from typing import *
 import requests
 from time import sleep
 from requests.exceptions import InvalidSchema
-# from selenium import webdriver
+from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.remote.webelement import WebElement
 # from selenium.webdriver.common.by import By
