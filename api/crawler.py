@@ -1,6 +1,9 @@
 # 函式註解
 from typing import *
 
+# 提供跨平臺的方式去下載和管理 Chrome Driver
+import chromedriver_binary
+
 # 網路爬蟲
 import requests
 from time import sleep
@@ -28,16 +31,23 @@ class MemeGeneratorPredisAI:
         self.chrome_options = Options()
         self.chrome_options.add_argument("--disable-gpu")
 
+        # 關閉操作許可權的提示框
+        self.chrome_options.add_argument('--disable-infobars')
+
         # 無頭模式
         self.chrome_options.add_argument("--headless")
 
+        # 關閉安全隔離，可以解決 Chrome Driver 無法啟動的問題
         self.chrome_options.add_argument("--no-sandbox")
     
     # 開啟瀏覽器
     def open_webdriver(self) -> None:
-        # 初始化瀏覽器、設置智能等待
+        # 初始化瀏覽器
+        # executable_path='' 代表使用 chromedriver_binary
+        self.driver = webdriver.Chrome(options = self.chrome_options, executable_path='')
+        
+        # 設置智能等待
         # 注意!!! implicitly_wait 不要設定得太短
-        self.driver = webdriver.Chrome('chromedriver', options = self.chrome_options)
         self.driver.implicitly_wait(20)
 
         # 開啟瀏覽器，並固定視窗大小
