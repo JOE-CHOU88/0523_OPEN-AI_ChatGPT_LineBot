@@ -2,5 +2,6 @@ Flask==2.2.2
 line-bot-sdk
 openai
 selenium
+chromedriver-binary
 transformers
 ckip-transformers

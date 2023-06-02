@@ -30,6 +30,8 @@ class MemeGeneratorPredisAI:
 
         # 無頭模式
         self.chrome_options.add_argument("--headless")
+
+        self.chrome_options.add_argument("--no-sandbox")
     
     # 開啟瀏覽器
     def open_webdriver(self) -> None:
