@@ -2,7 +2,8 @@
   "builds": [
     {
       "src": "api/index.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "timeout": 1200
     }
   ],
   "routes": [
@@ -10,8 +11,5 @@
       "src": "/(.*)",
       "dest": "api/index.py"
     }
-  ],
-  "api": {
-    "timeout": 300
-  }
+  ]
 }
