@@ -8,11 +8,10 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "api/index.py",
-      "methods": ["GET", "POST"]
+      "dest": "api/index.py"
     }
   ],
   "api": {
-    "timeout": 1200
+    "timeout": 300
   }
 }
