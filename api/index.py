@@ -36,9 +36,9 @@ chatgpt = ChatGPT()
 # chrome_options.add_argument("--disable-gpu")
 # chrome_options.add_argument("--headless")
 
-def generate_meme(reply_token, text):
+def generate_meme(reply_token, message_text):
     # 對輸入文本進行預處理，回傳 List[str]
-    text = text_preprocessing([text])
+    text = text_preprocessing([message_text])
     URL = "https://predis.ai/free-ai-tools/ai-meme-generator/#"
 
     # 至少 4 個詞彙才會執行
@@ -60,7 +60,7 @@ def generate_meme(reply_token, text):
     else:
         line_bot_api.reply_message(
             reply_token, 
-            TextSendMessage(text="字數過少")
+            TextSendMessage(text="字數過少，請輸入至少 4 個詞彙")
         )
 
     # driver = webdriver.Chrome('chromedriver', options=chrome_options)
@@ -102,6 +102,7 @@ def callback():
 # Function to send the message with the auto-appearing button
 def handle_message(event):
     global working_status
+    global gen_meme
 
     if event.message.type != "text":
         line_bot_api.reply_message(
@@ -112,6 +113,8 @@ def handle_message(event):
 
     if event.message.text == "啟動":
         working_status = True
+        gen_meme = False
+
         text_message = TextSendMessage(text="我是時下流行的AI智能，目前可以為您服務囉，歡迎來跟我互動~")
         line_bot_api.reply_message(
             event.reply_token,
@@ -120,13 +123,16 @@ def handle_message(event):
 
     if event.message.text == "安靜":
         working_status = False
+        gen_meme = False
+
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="感謝您的使用，若需要我的服務，請跟我說 「啟動」 謝謝~"))
         return
     
     if event.message.text == "meme":
-        # working_status = True
+        working_status = False
+        gen_meme = True
         
         line_bot_api.reply_message(
             event.reply_token,
@@ -134,12 +140,11 @@ def handle_message(event):
         
         # Start the meme generation in a background thread
         # meme_thread = Thread(target=generate_meme, args=(event.reply_token, event.message.text))
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="Meme generation in progress...")
-        )
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     TextSendMessage(text="Meme generation in progress...")
+        # )
         # meme_thread.start()
-        generate_meme(event.reply_token, event.message.text)
         return
     
     if event.message.text == "img":
@@ -168,6 +173,9 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [TextSendMessage(text=reply_msg),send_auto_button_message()])
+            
+    if gen_meme:
+        generate_meme(event.reply_token, event.message.text)
 
 # 自動產生對話詢問是否要切換到meme模式
 def send_auto_button_message():
