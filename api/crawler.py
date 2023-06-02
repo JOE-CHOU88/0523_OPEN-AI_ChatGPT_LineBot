@@ -56,7 +56,7 @@ class MemeGeneratorPredisAI:
 
         # 獲取圖片 url
         img_url = self.driver.find_element(By.CLASS_NAME, "MuiAvatar-img").get_attribute("src")
-        print(img_url)
+        return img_url
 
     # 關閉瀏覽器
     def close(self) -> None:
@@ -86,26 +86,3 @@ def text_preprocessing(text: List[str]) -> List[str]:
 
     # 回傳斷詞結果，list[str]
     return ws_result[0]
-
-def main():
-    text = "你們抓捕周樹人跟我魯迅有甚麼關係"
-    url = "https://predis.ai/free-ai-tools/ai-meme-generator/#"
-    
-    # 對輸入文本進行預處理，回傳 List[str]
-    text = text_preprocessing([text])
-
-    # 至少 4 個詞彙才會執行
-    if len(text) >= 4:
-        # 詞彙之間以空格做間隔
-        text = " ".join(text)
-
-        # 開始網路爬蟲
-        Generator = MemeGeneratorPredisAI(url)
-        Generator.open_webdriver()
-        Generator.genrate_meme(text)
-        Generator.close()
-    else:
-        print("字數過少")
-
-if __name__ == "__main__":
-    main()

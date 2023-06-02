@@ -9,10 +9,10 @@ from api.chatgpt import ChatGPT
 from typing import *
 
 # 網路爬蟲
-import requests
+# import requests
 from threading import Thread
-from time import sleep
-from requests.exceptions import InvalidSchema
+# from time import sleep
+# from requests.exceptions import InvalidSchema
 # from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.remote.webelement import WebElement
@@ -21,6 +21,7 @@ from requests.exceptions import InvalidSchema
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.support.ui import WebDriverWait
 
+from crawler import MemeGeneratorPredisAI, text_preprocessing
 
 import os
 
@@ -35,20 +36,46 @@ chatgpt = ChatGPT()
 # chrome_options.add_argument("--disable-gpu")
 # chrome_options.add_argument("--headless")
 
-# def generate_meme(reply_token):
-#     driver = webdriver.Chrome('chromedriver', options=chrome_options)
-#     driver.get("https://predis.ai/free-ai-tools/ai-meme-generator/#")  # Replace with the URL you want to open
-#     # Perform actions with the WebDriver (e.g., fill forms, click buttons)
-#     # You can interact with the page using driver.find_element, driver.click, etc.
-#     # After the necessary actions, capture the screenshot or extract information from the page
-#     screenshot_path = "screenshot.png"  # Replace with your desired screenshot path
-#     driver.save_screenshot(screenshot_path)
-#     driver.quit()
+def generate_meme(reply_token, text):
+    # 對輸入文本進行預處理，回傳 List[str]
+    text = text_preprocessing([text])
+    URL = "https://predis.ai/free-ai-tools/ai-meme-generator/#"
 
-#     line_bot_api.reply_message(
-#         reply_token,
-#         TextSendMessage(text="Meme generated!")
-#     )
+    # 至少 4 個詞彙才會執行
+    if len(text) >= 4:
+        # 詞彙之間以空格做間隔
+        text = " ".join(text)
+
+        # 開始網路爬蟲
+        Generator = MemeGeneratorPredisAI(URL)
+        Generator.open_webdriver()
+        meme_url = Generator.genrate_meme(text)
+        Generator.close()
+
+        image_message = ImageSendMessage(original_content_url=meme_url, preview_image_url=meme_url)
+        line_bot_api.reply_message(
+            reply_token,
+            image_message
+        )
+    else:
+        line_bot_api.reply_message(
+            reply_token, 
+            TextSendMessage(text="字數過少")
+        )
+
+    # driver = webdriver.Chrome('chromedriver', options=chrome_options)
+    # driver.get()  # Replace with the URL you want to open
+    # # Perform actions with the WebDriver (e.g., fill forms, click buttons)
+    # # You can interact with the page using driver.find_element, driver.click, etc.
+    # # After the necessary actions, capture the screenshot or extract information from the page
+    # screenshot_path = "screenshot.png"  # Replace with your desired screenshot path
+    # driver.save_screenshot(screenshot_path)
+    # driver.quit()
+
+    # line_bot_api.reply_message(
+    #     reply_token,
+    #     TextSendMessage(text="Meme generated!")
+    # )
 
 # domain root
 @app.route('/')
@@ -100,16 +127,18 @@ def handle_message(event):
     
     if event.message.text == "meme":
         working_status = True
-        # # Start the meme generation in a background thread
-        # meme_thread = Thread(target=generate_meme, args=(event.reply_token,))
-        # meme_thread.start()
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     TextSendMessage(text="Meme generation in progress...")
-        # )
+        
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態，開心果將推薦您好笑的梗圖!"))
+        
+        # Start the meme generation in a background thread
+        meme_thread = Thread(target=generate_meme, args=(event.reply_token, event.message.text))
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="Meme generation in progress...")
+        )
+        meme_thread.start()
         return
     
     if event.message.text == "img":
