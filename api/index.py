@@ -126,19 +126,20 @@ def handle_message(event):
         return
     
     if event.message.text == "meme":
-        working_status = True
+        # working_status = True
         
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="開心果歡迎您~請寫一段話表達你現在的狀態，開心果將推薦您好笑的梗圖!"))
         
         # Start the meme generation in a background thread
-        meme_thread = Thread(target=generate_meme, args=(event.reply_token, event.message.text))
+        # meme_thread = Thread(target=generate_meme, args=(event.reply_token, event.message.text))
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="Meme generation in progress...")
         )
-        meme_thread.start()
+        # meme_thread.start()
+        generate_meme(event.reply_token, event.message.text)
         return
     
     if event.message.text == "img":
