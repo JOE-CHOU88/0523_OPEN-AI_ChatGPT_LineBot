@@ -4,7 +4,7 @@
       "src": "api/index.py",
       "use": "@vercel/python",
       "config": {
-        "maxDuration": 1200
+        "maxDuration": 2400
       }
     }
   ],
