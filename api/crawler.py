@@ -55,7 +55,7 @@ class MemeGeneratorPredisAI:
         self.driver.set_window_size(1200, 800)
         sleep(0.5)
 
-    def genrate_meme(self, text: str) -> None:
+    def genrate_meme(self, text: str) -> str:
         # 輸入情境文本
         textarea = self.driver.find_element(By.CLASS_NAME, "MuiFilledInput-input")
         textarea.send_keys(text)
